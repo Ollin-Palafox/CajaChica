@@ -14,10 +14,10 @@ class CreateReporteTable extends Migration
     public function up()
     {
         Schema::create('reporte', function (Blueprint $table) {
-            $table->id_reporte();
-            $table->Fecha_generacion();
-            $table->user();
-            $table->gasto();
+            $table->id('id_reporte');
+            $table->date('fecha_generacion');
+            $table->foreign('user')->references('id_usuario')->on('users');
+            $table->int('gasto');
         });
     }
 
