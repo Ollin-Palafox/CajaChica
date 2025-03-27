@@ -14,9 +14,10 @@ class CreateSaldocajaTable extends Migration
     public function up()
     {
         Schema::create('saldocaja', function (Blueprint $table) {
-            $table->id_saldo();
-            $table->monto_inicial();
-            $table->monto_actual();
+            $table->id('id_saldo');
+            $table->double('saldo_inicial');
+            $table->double('monto_actual');
+            
         });
     }
 
