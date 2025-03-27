@@ -29,7 +29,6 @@
         <div class="card">
             <div class="card-header bg-primary text-white" style="font-size: 30px;">Opciones del sistema</div>
             <div class="card-body">
-                <p style="font-size: 25px;">Aquí puedes modificar la configuración del sistema de caja chica.</p>
                 
                 <!-- Configuración de historial de transacciones -->
                 <div class="mb-4">
@@ -75,21 +74,61 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Configuración de límites de reposición -->
+              
+                <!-- Configuración de reposiciones -->
                 <div class="mb-4">
-                    <label for="limiteReposicion" style="font-size: 25px;">Límite de reposición de fondos base:</label>
-                    <input type="number" class="form-control" id="limiteReposicion" placeholder="Ingresar límite de reposición" style="font-size: 22px;">
+                    <p style="font-size: 25px;">Aquí puedes modificar la configuración del presupuesto:</p>
+                    <button class="btn btn-info" style="font-size: 25px;" data-bs-toggle="modal" data-bs-target="#configCajaChicaModal">
+                        Configurar
+                    </button>
                 </div>
 
-                <!-- Configuración de frecuencia de notificaciones -->
+                <!-- Configuración de reposiciones (ventana emergente)-->
+                 <!-- Modal para configuración de presupuesto de caja chica -->
+<div class="modal fade" id="configCajaChicaModal" tabindex="-1" aria-labelledby="configCajaChicaModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="configCajaChicaModalLabel" style="font-size: 30px;">Configuración de Presupuesto - Caja Chica</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Formulario para configuraciones -->
+                <form>
+                    <div class="mb-3">
+                        <label for="presupuestoInicial" class="form-label" style="font-size: 20px;">Presupuesto Inicial</label>
+                        <input type="number" class="form-control" id="presupuestoInicial" placeholder="Ingrese el presupuesto inicial" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="gastoMaximo" class="form-label" style="font-size: 20px;">Gasto Máximo Permitido</label>
+                        <input type="number" class="form-control" id="gastoMaximo" placeholder="Ingrese el límite de gasto permitido" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="moneda" class="form-label" style="font-size: 20px;">Moneda</label>
+                        <select class="form-select" id="moneda" required>
+                            <option value="" disabled selected>Seleccione la moneda</option>
+                            <option value="MXN">MXN - Peso Mexicano</option>
+                            <option value="USD">USD - Dólar Estadounidense</option>
+                            <option value="EUR">EUR - Euro</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" style="font-size: 20px;">Guardar Configuración</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="font-size: 20px;">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+                <!-- Reposición de fondos -->
                 <div class="mb-4">
-                    <label for="frecuenciaNotificaciones" style="font-size: 25px;">Frecuencia de notificaciones:</label>
-                    <select class="form-select" id="frecuenciaNotificaciones" style="font-size: 22px;">
-                        <option value="diaria">Diaria</option>
-                        <option value="semanal">Semanal</option>
-                        <option value="mensual">Mensual</option>
-                    </select>
+                    <label for="frecuenciaNotificaciones" style="font-size: 25px;">Reponer cantidad base:</label>
+                    <p></p>
+                    <button class="btn btn-warning" style="font-size: 25px;">
+                        Reponer fondos
+                    </button>
                 </div>
 
                 <!-- Configuración de visibilidad de reportes -->
