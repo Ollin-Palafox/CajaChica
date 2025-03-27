@@ -14,8 +14,10 @@ class CreatePunteroreporteTable extends Migration
     public function up()
     {
         Schema::create('punteroreporte', function (Blueprint $table) {
-            $table->foreign('id_reporte')->references('id_reporte')->on('reporte');
-            $table->foreign('id_saldo')->references('id_saldo')->on('saldocaja');
+            $table->id(); // Clave primaria autoincremental
+            $table->foreignId('id_reporte')->constrained('reporte');
+            $table->foreignId('id_saldo')->constrained('saldocaja');
+            $table->timestamps(); // Para rastrear creación/actualización
         });
     }
 
