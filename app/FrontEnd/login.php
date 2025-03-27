@@ -1,28 +1,23 @@
 <?php
-// Inicia la sesión
 session_start();
+require 'conexion.php';
 
-// Datos ficticios para validación (puedes reemplazar con conexión a base de datos más adelante)
-$usuarios = [
-    ["correo" => "usuario@example.com", "contraseña" => "12345", "nombre" => "Usuario Ejemplo"]
-];
-
-// Maneja el formulario al enviarlo
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $correo = $_POST['correo'];
+    $nombre = $_POST['nombre']; // Cambiado de 'correo' a 'nombre'
     $contraseña = $_POST['contraseña'];
 
-    // Verifica las credenciales
-    foreach ($usuarios as $usuario) {
-        if ($usuario['correo'] === $correo && $usuario['contraseña'] === $contraseña) {
-            $_SESSION['nombre'] = $usuario['nombre'];
-            header('Location: configuracion.html'); // Redirige al archivo de configuración
-            exit;
-        }
-    }
+    // Buscar usuario por nombre (asume nombres únicos)
+    $stmt = $pdo->prepare("SELECT * FROM users WHERE nombre = ?");
+    $stmt->execute([$nombre]);
+    $usuario = $stmt->fetch();
 
-    // Muestra un mensaje de error si las credenciales no coinciden
-    $error = "Correo o contraseña incorrectos.";
+    if ($usuario && password_verify($contraseña, $usuario['password'])) {
+        $_SESSION['id_usuario'] = $usuario['id_usuario'];
+        header('Location: index.php');
+        exit;
+    } else {
+        $error = "Credenciales incorrectas";
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -54,22 +49,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="container d-flex align-items-center justify-content-center h-100">
         <div class="login-container">
             <h2 class="text-center mb-4">Iniciar Sesión</h2>
-            <!-- Mostrar mensaje de error si las credenciales son incorrectas -->
             <?php if (isset($error)): ?>
-                <div class="alert alert-danger" role="alert">
-                    <?= htmlspecialchars($error) ?>
-                </div>
+                <div class="alert alert-danger"><?= $error ?></div>
             <?php endif; ?>
             <form method="POST">
                 <div class="mb-3">
-                    <label for="correo" class="form-label">Correo Institucional</label>
-                    <input type="email" class="form-control" id="correo" name="correo" placeholder="Ingresa tu correo" required>
+                    <label for="nombre" class="form-label">Nombre de Usuario</label> <!-- Cambiado de "Correo" -->
+                    <input type="text" class="form-control" name="nombre" required> <!-- Tipo text en vez de email -->
                 </div>
                 <div class="mb-3">
                     <label for="contraseña" class="form-label">Contraseña</label>
-                    <input type="password" class="form-control" id="contraseña" name="contraseña" placeholder="Ingresa tu contraseña" required>
+                    <input type="password" class="form-control" name="contraseña" required>
                 </div>
-                <button type="submit" class="btn btn-primary w-100">Iniciar Sesión</button>
+                <button type="submit" class="btn btn-primary w-100">Ingresar</button>
             </form>
         </div>
     </div>
