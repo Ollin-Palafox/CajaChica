@@ -16,8 +16,8 @@ class CreateReporteTable extends Migration
         Schema::create('reporte', function (Blueprint $table) {
             $table->id('id_reporte');
             $table->date('fecha_generacion');
-            $table->foreign('user')->references('id_usuario')->on('users');
-            $table->int('gasto');
+            $table->foreign('id_usuario')->references('id_usuario')->on('users');
+            $table->decimal('gasto', 10, 2);
         });
     }
 
